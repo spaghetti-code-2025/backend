@@ -8,6 +8,7 @@ import { Novel } from '@prisma/client';
 export class NovelService {
   constructor(private readonly prismaService: PrismaService) {}
 
+  //tt
   async createNovel({
     title,
     author,
