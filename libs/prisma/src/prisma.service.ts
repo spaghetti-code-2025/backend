@@ -14,9 +14,9 @@ export class PrismaService
   }
 
   onModuleInit() {
-    throw new Error('Method not implemented.');
+    this.$connect();
   }
   onModuleDestroy() {
-    throw new Error('Method not implemented.');
+    this.$disconnect();
   }
 }
