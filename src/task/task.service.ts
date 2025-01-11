@@ -12,6 +12,17 @@ export class TaskService {
     return this.prismaService.task.findMany();
   }
 
+  async getPendingTasks(address: string): Promise<Task[]> {
+    return this.prismaService.task.findMany({
+      where: {
+        novel: {
+          reviewer_address: address,
+        },
+        status: Status.PENDING,
+      },
+    });
+  }
+
   async createTask(
     { length, start, end, novel_id }: CreateTaskDto,
     address: string,

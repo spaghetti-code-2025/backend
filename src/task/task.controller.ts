@@ -30,6 +30,16 @@ export class TaskController {
     return this.taskService.getTasks();
   }
 
+  @Get('pending')
+  @UseGuards(UserJwtGuard)
+  @ApiBearerAuth('JWT')
+  @ApiOkResponse({ type: TaskResDto, isArray: true })
+  async getPendingTasks(
+    @GetJwtUser() { address }: { address: string },
+  ): Promise<TaskResDto[]> {
+    return this.taskService.getPendingTasks(address);
+  }
+
   @Post()
   @UseGuards(UserJwtGuard)
   @ApiBearerAuth('JWT')
