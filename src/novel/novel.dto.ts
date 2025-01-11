@@ -1,31 +1,44 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { Novel } from '@prisma/client';
-import { IsInt, IsNumber, IsString } from 'class-validator';
+import { IsArray, IsInt, IsNumber, IsString } from 'class-validator';
 
 export class CreateNovelReqDto {
+  @ApiProperty()
   @IsString()
   title: string;
 
+  @ApiProperty()
   @IsString()
   author: string;
 
+  @ApiProperty()
   @IsString()
   intro: string;
 
+  @ApiProperty()
   @IsString()
   notes: string;
 
+  @ApiProperty()
   @IsNumber()
   @IsInt()
   price: number;
 
+  @ApiProperty()
   @IsNumber()
   @IsInt()
   length: number;
 
+  @ApiProperty()
   @IsString()
   content: string;
 
+  @ApiProperty()
+  @IsArray()
+  @IsInt({ each: true })
+  separator: number[];
+
+  @ApiProperty()
   @IsString()
   reviewer_id: string;
 }
@@ -54,6 +67,9 @@ export class NovelResDto implements Novel {
 
   @ApiProperty()
   content: string;
+
+  @ApiProperty()
+  separator: number[];
 
   @ApiProperty()
   reviewer_id: string;

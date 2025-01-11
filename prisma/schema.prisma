@@ -24,7 +24,8 @@ model Novel {
   notes       String
   reviewer_id String
 
-  content String
+  content   String
+  separator Int[]
 
   progress  Float
   per_chars Int
