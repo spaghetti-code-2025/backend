@@ -17,12 +17,13 @@ model User {
 }
 
 model Novel {
-  id               Int    @id @default(autoincrement())
+  id               Int     @id @default(autoincrement())
   title            String
   author           String
   intro            String
   notes            String
   reviewer_address String
+  image_url        String?
 
   content   String
   separator Int[]

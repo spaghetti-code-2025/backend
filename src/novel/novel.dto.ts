@@ -69,6 +69,9 @@ export class NovelResDto implements Novel {
   content: string;
 
   @ApiProperty()
+  image_url: string;
+
+  @ApiProperty()
   separator: number[];
 
   @ApiProperty()
@@ -82,4 +85,15 @@ export class NovelResDto implements Novel {
 
   @ApiProperty()
   hash: string;
+}
+
+export class UploadImageDto {
+  @ApiProperty()
+  @IsNumber()
+  @IsInt()
+  id: number;
+
+  @ApiProperty()
+  @IsString()
+  url: string;
 }

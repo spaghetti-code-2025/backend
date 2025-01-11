@@ -1,6 +1,6 @@
 import { PrismaService } from '@lib/prisma';
 import { Injectable } from '@nestjs/common';
-import { CreateNovelReqDto } from './novel.dto';
+import { CreateNovelReqDto, UploadImageDto } from './novel.dto';
 import { createHash } from 'crypto';
 import { Novel } from '@prisma/client';
 
@@ -37,5 +37,12 @@ export class NovelService {
 
   async getNovels(): Promise<Novel[]> {
     return this.prismaService.novel.findMany();
+  }
+
+  async updateUrl({ id, url }: UploadImageDto): Promise<Novel> {
+    return this.prismaService.novel.update({
+      where: { id },
+      data: { image_url: url },
+    });
   }
 }
