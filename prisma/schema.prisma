@@ -1,0 +1,114 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Novel {
+  id            Int    @id @default(autoincrement())
+  title         String
+  author        String
+  progress      Float
+  per_100_chars Float
+  intro         String
+  notes         String
+
+  participants Participant[]
+  reviewers    Reviewer[]
+  episodes     Episode[]
+
+  @@map("novels")
+}
+
+model Episode {
+  id      Int  @id @default(autoincrement())
+  content Json
+
+  tasks Task[]
+
+  novel_id Int
+  novel    Novel @relation(fields: [novel_id], references: [id])
+
+  @@map("episodes")
+}
+
+enum Status {
+  PENDING
+  IN_PROGRESS
+  DONE
+}
+
+model Task {
+  id             Int    @id @default(autoincrement())
+  start_position Int
+  start_sentence Int
+  end_sentence   Int
+  assign_id      Int
+  status         Status @default(PENDING)
+
+  episode_id Int
+  episode    Episode @relation(fields: [episode_id], references: [id])
+
+  participant_id Int?
+  participant    Participant? @relation(fields: [participant_id], references: [id])
+
+  @@map("tasks")
+}
+
+model Participant {
+  id Int @id
+
+  novel_id Int
+  novel    Novel    @relation(fields: [novel_id], references: [id])
+  Task     Task[]
+  Review   Review[]
+
+  @@map("participants")
+}
+
+model Reviewer {
+  id Int @id
+
+  novel_id Int
+  novel    Novel     @relation(fields: [novel_id], references: [id])
+  Review   Review[]
+  Comment  Comment[]
+
+  @@map("reviewers")
+}
+
+model Review {
+  id Int @id @default(autoincrement())
+
+  comment Comment[]
+
+  reviewer_id Int
+  reviewer    Reviewer @relation(fields: [reviewer_id], references: [id])
+
+  participant_id Int
+  participant    Participant @relation(fields: [participant_id], references: [id])
+
+  @@map("reviews")
+}
+
+model Comment {
+  id Int @id @default(autoincrement())
+
+  content String
+
+  review_id   Int
+  review      Review   @relation(fields: [review_id], references: [id])
+  reviewer_id Int
+  reviewer    Reviewer @relation(fields: [reviewer_id], references: [id])
+
+  @@map("comments")
+}
