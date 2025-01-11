@@ -12,6 +12,7 @@ export class UserService {
   ) {}
 
   async login({ address, secret }: UserCredentialsDto): Promise<JwtResDto> {
+    return { token: await this.jwtService.sign({ address }) };
     const user = await this.prismaService.user.findUnique({
       where: {
         address,

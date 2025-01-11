@@ -4,6 +4,7 @@ import { CreateTaskDto, TaskResDto } from './task.dto';
 import { UserJwtGuard } from 'src/user/user.guard';
 import { GetJwtUser } from 'src/user/user.decorator';
 import {
+  ApiBearerAuth,
   ApiCreatedResponse,
   ApiOkResponse,
   ApiOperation,
@@ -22,6 +23,7 @@ export class TaskController {
 
   @Post()
   @UseGuards(UserJwtGuard)
+  @ApiBearerAuth('JWT')
   @ApiUnauthorizedResponse()
   @ApiCreatedResponse({ type: TaskResDto })
   async createTask(
@@ -33,6 +35,7 @@ export class TaskController {
 
   @Post('translated')
   @UseGuards(UserJwtGuard)
+  @ApiBearerAuth('JWT')
   @ApiUnauthorizedResponse()
   @ApiCreatedResponse()
   async updateTranslatedTask(
@@ -44,6 +47,7 @@ export class TaskController {
 
   @Post('close')
   @UseGuards(UserJwtGuard)
+  @ApiBearerAuth('JWT')
   @ApiOperation({
     summary: 'Finish task',
     description: 'reviewer가 허가해야지 close가 됨.',
