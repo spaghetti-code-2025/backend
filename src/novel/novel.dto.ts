@@ -40,7 +40,7 @@ export class CreateNovelReqDto {
 
   @ApiProperty()
   @IsString()
-  reviewer_id: string;
+  reviewer_address: string;
 }
 
 export class NovelResDto implements Novel {
@@ -72,7 +72,7 @@ export class NovelResDto implements Novel {
   separator: number[];
 
   @ApiProperty()
-  reviewer_id: string;
+  reviewer_address: string;
 
   @ApiProperty()
   progress: number;

@@ -49,7 +49,7 @@ export class TaskService {
         novel: true,
       },
     });
-    if (task.novel.reviewer_id !== address) {
+    if (task.novel.reviewer_address !== address) {
       throw new UnauthorizedException();
     }
     return await this.prismaService.task.update({

@@ -10,6 +10,7 @@ import { UserJwtStrategy } from './user.strategy';
 @Module({
   imports: [
     PrismaModule,
+    ConfigModule,
     JwtModule.registerAsync({
       imports: [ConfigModule],
       inject: [ConfigService],

@@ -16,7 +16,7 @@ export class NovelService {
     price,
     length,
     content,
-    reviewer_id,
+    reviewer_address,
   }: CreateNovelReqDto): Promise<Novel> {
     return this.prismaService.novel.create({
       data: {
@@ -30,7 +30,7 @@ export class NovelService {
         price,
         length,
         hash: createHash('sha256').update(content).digest('base64'),
-        reviewer_id,
+        reviewer_address,
       },
     });
   }
