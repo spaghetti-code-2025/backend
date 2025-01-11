@@ -1,5 +1,6 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsInt, IsNumber } from 'class-validator';
+import { $Enums, Task } from '@prisma/client';
+import { IsInt, IsNumber, IsString } from 'class-validator';
 
 export class CreateTaskDto {
   @ApiProperty()
@@ -16,4 +17,44 @@ export class CreateTaskDto {
   @IsNumber()
   @IsInt()
   end: number;
+}
+
+export class UpdateTranslatedTaskDto {
+  @ApiProperty()
+  @IsNumber()
+  @IsInt()
+  id: number;
+
+  @ApiProperty()
+  @IsString()
+  translated: string;
+}
+
+export class TaskResDto implements Task {
+  @ApiProperty()
+  length: number;
+
+  @ApiProperty()
+  start: number;
+
+  @ApiProperty()
+  end: number;
+
+  @ApiProperty()
+  id: number;
+
+  @ApiProperty()
+  translated: string;
+
+  @ApiProperty()
+  status: $Enums.Status;
+
+  @ApiProperty()
+  trans_hash: string;
+
+  @ApiProperty()
+  participantAddress: string;
+
+  @ApiProperty()
+  novel_id: number;
 }
