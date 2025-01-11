@@ -11,6 +11,8 @@ RUN npm install
 
 COPY . .
 
+RUN npx prisma generate
+
 RUN npx nest build 
 
 #Step 2: Copy the build from 'builder' to 'runner'

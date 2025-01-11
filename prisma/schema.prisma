@@ -7,14 +7,23 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+model User {
+  address String @id
+  secret  String
+
+  Novel   Novel? @relation(fields: [novelId], references: [id])
+  novelId Int?
+  Task    Task[]
+}
+
 model Novel {
-  id     Int    @id @default(autoincrement())
-  title  String
-  author String
-  intro  String
-  notes  String
+  id          Int    @id @default(autoincrement())
+  title       String
+  author      String
+  intro       String
+  notes       String
   reviewer_id String
-  
+
   content String
 
   progress  Float
@@ -24,7 +33,7 @@ model Novel {
 
   hash String
 
-  participants Participant[]
+  participants User[]
 
   @@map("novels")
 }
@@ -47,21 +56,11 @@ model Task {
   translated String
   trans_hash String
 
-  participant_id Int?
-  participant    Participant? @relation(fields: [participant_id], references: [id])
-  Review         Review[]
+  participant        User?    @relation(fields: [participantAddress], references: [address])
+  participantAddress String?
+  Review             Review[]
 
   @@map("tasks")
-}
-
-model Participant {
-  id Int @id
-
-  novel_id Int
-  novel    Novel  @relation(fields: [novel_id], references: [id])
-  Task     Task[]
-
-  @@map("participants")
 }
 
 model Review {
