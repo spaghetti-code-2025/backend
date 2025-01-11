@@ -1,9 +1,16 @@
-import { Body, Controller, Post } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Post,
+  UsePipes,
+  ValidationPipe,
+} from '@nestjs/common';
 import { UserService } from './user.service';
 import { JwtResDto, UserCredentialsDto } from './user.dto';
 import { ApiCreatedResponse, ApiUnauthorizedResponse } from '@nestjs/swagger';
 
 @Controller('user')
+@UsePipes(new ValidationPipe())
 export class UserController {
   constructor(private readonly userService: UserService) {}
 

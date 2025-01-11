@@ -1,4 +1,12 @@
-import { Body, Controller, Get, Post, UseGuards } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Get,
+  Post,
+  UseGuards,
+  UsePipes,
+  ValidationPipe,
+} from '@nestjs/common';
 import { TaskService } from './task.service';
 import { CreateTaskDto, TaskResDto } from './task.dto';
 import { UserJwtGuard } from 'src/user/user.guard';
@@ -12,6 +20,7 @@ import {
 } from '@nestjs/swagger';
 
 @Controller('task')
+@UsePipes(new ValidationPipe())
 export class TaskController {
   constructor(private readonly taskService: TaskService) {}
 

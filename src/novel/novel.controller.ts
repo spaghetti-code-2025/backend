@@ -1,9 +1,17 @@
-import { Body, Controller, Get, Post } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Get,
+  Post,
+  UsePipes,
+  ValidationPipe,
+} from '@nestjs/common';
 import { NovelService } from './novel.service';
 import { CreateNovelReqDto, NovelResDto, UploadImageDto } from './novel.dto';
 import { ApiCreatedResponse, ApiOkResponse } from '@nestjs/swagger';
 
 @Controller('novel')
+@UsePipes(new ValidationPipe())
 export class NovelController {
   constructor(private readonly novelService: NovelService) {}
 
