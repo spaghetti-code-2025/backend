@@ -6,6 +6,11 @@ export class CreateTaskDto {
   @ApiProperty()
   @IsNumber()
   @IsInt()
+  novel_id: number;
+
+  @ApiProperty()
+  @IsNumber()
+  @IsInt()
   length: number;
 
   @ApiProperty()

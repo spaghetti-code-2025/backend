@@ -59,8 +59,8 @@ model Task {
   participant        User     @relation(fields: [participantAddress], references: [address])
   participantAddress String
   Review             Review[]
-  novel              Novel?   @relation(fields: [novel_id], references: [id])
-  novel_id           Int?
+  novel              Novel    @relation(fields: [novel_id], references: [id])
+  novel_id           Int
 
   @@map("tasks")
 }

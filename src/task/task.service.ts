@@ -13,11 +13,12 @@ export class TaskService {
   }
 
   async createTask(
-    { length, start, end }: CreateTaskDto,
+    { length, start, end, novel_id }: CreateTaskDto,
     address: string,
   ): Promise<Task> {
     return this.prismaService.task.create({
       data: {
+        novel_id,
         participantAddress: address,
         length,
         start,
