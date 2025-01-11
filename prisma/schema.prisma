@@ -47,12 +47,11 @@ enum Status {
 }
 
 model Task {
-  id        Int    @id @default(autoincrement())
-  length    Int
-  start     Int
-  end       Int
-  assign_id Int
-  status    Status @default(PENDING)
+  id     Int    @id @default(autoincrement())
+  length Int
+  start  Int
+  end    Int
+  status Status @default(PENDING)
 
   translated String
   trans_hash String
