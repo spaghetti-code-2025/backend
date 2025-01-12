@@ -33,7 +33,7 @@ export class UserService {
     const user = await this.prismaService.user.create({
       data: {
         address,
-        secret: bcrypt.hashSync(secret, 10),
+        secret: await bcrypt.hash(secret, 10),
       },
     });
     return { token: await this.jwtService.sign({ address: user.address }) };
