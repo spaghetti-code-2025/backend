@@ -8,7 +8,12 @@ import {
   ValidationPipe,
 } from '@nestjs/common';
 import { TaskService } from './task.service';
-import { CreateTaskDto, TaskResDto, UpdateTranslatedTaskDto } from './task.dto';
+import {
+  CreateTaskDto,
+  GetTaskIdDto,
+  TaskResDto,
+  UpdateTranslatedTaskDto,
+} from './task.dto';
 import { UserJwtGuard } from 'src/user/user.guard';
 import { GetJwtUser } from 'src/user/user.decorator';
 import {
@@ -74,7 +79,7 @@ export class TaskController {
   @ApiUnauthorizedResponse()
   @ApiCreatedResponse({ type: TaskResDto })
   async startReviewTask(
-    @Body('id') id: number,
+    @Body() { id }: GetTaskIdDto,
     @GetJwtUser() { address }: { address: string },
   ): Promise<TaskResDto> {
     return this.taskService.startReviewTask(id, address);

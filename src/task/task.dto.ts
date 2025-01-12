@@ -24,6 +24,13 @@ export class CreateTaskDto {
   end: number;
 }
 
+export class GetTaskIdDto {
+  @ApiProperty()
+  @IsNumber()
+  @IsInt()
+  id: number;
+}
+
 export class UpdateTranslatedTaskDto {
   @ApiProperty()
   @IsNumber()
