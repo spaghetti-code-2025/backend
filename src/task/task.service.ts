@@ -83,7 +83,8 @@ export class TaskService {
     if (task.novel.reviewer_address !== address) {
       throw new UnauthorizedException();
     }
-    return await this.prismaService.task.update({
+
+    const result = await this.prismaService.task.update({
       where: { id },
       data: {
         status: Status.DONE,
@@ -92,5 +93,25 @@ export class TaskService {
           .digest('base64'),
       },
     });
+
+    const totalTasks = await this.prismaService.task.count({
+      where: {
+        novel_id: task.novel_id,
+      },
+    });
+    const completedTasks = await this.prismaService.task.count({
+      where: {
+        novel_id: task.novel_id,
+        status: Status.DONE,
+      },
+    });
+    await this.prismaService.novel.update({
+      where: { id: task.novel_id },
+      data: {
+        progress: (completedTasks / totalTasks) * 100,
+      },
+    });
+
+    return result;
   }
 }
