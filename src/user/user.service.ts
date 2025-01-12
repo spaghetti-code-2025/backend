@@ -11,17 +11,16 @@ export class UserService {
     private readonly jwtService: JwtService,
   ) {}
 
-  async login({ address, secret }: UserCredentialsDto): Promise<JwtResDto> {
-    return { token: await this.jwtService.sign({ address }) };
+  async login({ address }: UserCredentialsDto): Promise<JwtResDto> {
     const user = await this.prismaService.user.findUnique({
       where: {
         address,
       },
     });
     if (!user) {
-      return this.createUser({ address, secret });
+      return this.createUser({ address, secret: address });
     }
-    if (user && bcrypt.compareSync(secret, user.secret)) {
+    if (user && bcrypt.compareSync(address, user.secret)) {
       return { token: await this.jwtService.sign({ address: user.address }) };
     }
     throw new UnauthorizedException();
