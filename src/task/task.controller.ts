@@ -64,6 +64,22 @@ export class TaskController {
     return this.taskService.updateTranslatedTask(data, address);
   }
 
+  @Post('review')
+  @UseGuards(UserJwtGuard)
+  @ApiBearerAuth('JWT')
+  @ApiOperation({
+    summary: 'Start review task',
+    description: 'participant 허가해야지 review가 시작됨.',
+  })
+  @ApiUnauthorizedResponse()
+  @ApiCreatedResponse({ type: TaskResDto })
+  async startReviewTask(
+    @Body('id') id: number,
+    @GetJwtUser() { address }: { address: string },
+  ): Promise<TaskResDto> {
+    return this.taskService.startReviewTask(id, address);
+  }
+
   @Post('close')
   @UseGuards(UserJwtGuard)
   @ApiBearerAuth('JWT')

@@ -36,6 +36,7 @@ export class TaskService {
         end,
         translated: '',
         trans_hash: '',
+        status: Status.IN_PROGRESS,
       },
     });
   }
@@ -52,6 +53,24 @@ export class TaskService {
       .catch(() => {
         throw new UnauthorizedException();
       });
+  }
+
+  async startReviewTask(id: number, address: string): Promise<Task> {
+    const task = await this.prismaService.task.findUnique({
+      where: { id },
+      include: {
+        novel: true,
+      },
+    });
+    if (task.participantAddress !== address) {
+      throw new UnauthorizedException();
+    }
+    return await this.prismaService.task.update({
+      where: { id },
+      data: {
+        status: Status.PENDING,
+      },
+    });
   }
 
   async finishTask(id: number, address: string): Promise<Task> {
